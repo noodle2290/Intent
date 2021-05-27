@@ -8,6 +8,7 @@ import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+    val readrequestCode = 35
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -29,7 +30,8 @@ class MainActivity : AppCompatActivity() {
             mapIntent.data = Uri.parse("geo:35.6473,139.7360")
             if (mapIntent.resolveActivity(packageManager) == null){
                 startActivity(mapIntent)
-            }
+            }//最悪IF文なしでやってみる
+            //query
         }
 
         browserButton.setOnClickListener {
@@ -44,14 +46,14 @@ class MainActivity : AppCompatActivity() {
             val galleryIntent= Intent(Intent.ACTION_OPEN_DOCUMENT)
             galleryIntent.addCategory(Intent.CATEGORY_OPENABLE)
             galleryIntent.type = "image/*"
-            startActivityForResult(galleryIntent, readRequestCode)
+            startActivityForResult(galleryIntent,readrequestCode)
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
         super.onActivityResult(requestCode, resultCode, resultData)
 
-        if (requestCode == readRequestCode && resultCode == Activity.RESULT_OK){
+        if (requestCode == readrequestCode && resultCode == Activity.RESULT_OK){
             resultData?.data.also{ uri ->
                 imageView.setImageURI(uri)
             }
